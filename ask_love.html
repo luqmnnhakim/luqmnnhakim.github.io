@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Love Me?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: palevioletred;
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+        .container {
+            margin-top: 20px; /* Reduced margin for better mobile view */
+            padding: 10px; /* Add padding for mobile view */
+        }
+        .header_text {
+            color: #333;
+            font-size: 1.5em; /* Adjust font size for better readability */
+        }
+        .gif_container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .buttons {
+            position: relative;
+            height: 200px;
+            margin-top: 20px;
+        }
+        .btn {
+            position: absolute;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: darkred;
+            color: white;
+            width: 80%; /* Make buttons full width on mobile */
+            max-width: 200px; /* Maximum width for buttons */
+            left: 50%;
+            transform: translateX(-50%); /* Center button */
+        }
+        #yesButton {
+            top: 60%; /* Positioning yes button */
+        }
+        #noButton {
+            top: 70%; /* Positioning no button */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h1 class="header_text">Hii Sayang, I've been thinking about us. What do you think about our relationship?</h1>
+            <h1 class="header_text">Do you really love me?</h1>
+        </div>
+        <div class="gif_container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute animated illustration">
+        </div>
+        <div class="buttons">
+            <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
+            <button class="btn" id="noButton" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
+
+    <script>
+        let isMoving = true; // Flag to control movement
+
+        // Automatically execute a function on page load
+        window.onload = function() {
+            // You can add actions here that you want to perform when the page loads
+            console.log("Page loaded!");
+        };
+
+        function nextPage() {
+            window.location.href = "yes.html";
+        }
+
+        function moveButton() {
+            if (!isMoving) return; // If movement is paused, do nothing
+
+            var noButton = document.getElementById('noButton');
+            var maxX = window.innerWidth - noButton.offsetWidth - 30; // Add padding to prevent overflow
+
+            // Randomize the target position while keeping y near the top
+            var targetX = Math.random() * maxX;
+            var targetY = Math.random() * 100; // Limit y to the top area
+
+            // Move the button smoothly
+            var currentX = parseFloat(noButton.style.left) || 0;
+            var currentY = parseFloat(noButton.style.top) || 0;
+
+            var step = 10; // Change this value for speed
+            var interval = setInterval(function() {
+                if (Math.abs(currentX - targetX) < step && Math.abs(currentY - targetY) < step) {
+                    // Stop the animation if close enough to target
+                    noButton.style.left = targetX + 'px';
+                    noButton.style.top = targetY + 'px';
+                    clearInterval(interval);
+                } else {
+                    // Move the button towards the target
+                    if (currentX < targetX) {
+                        currentX += step;
+                    } else if (currentX > targetX) {
+                        currentX -= step;
+                    }
+                    if (currentY < targetY) {
+                        currentY += step;
+                    } else if (currentY > targetY) {
+                        currentY -= step;
+                    }
+
+                    noButton.style.left = currentX + 'px';
+                    noButton.style.top = currentY + 'px';
+                }
+            }, 1); // Adjust the speed of movement
+        }
+    </script>
+</body>
+</html>
